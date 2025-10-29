@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: lazzzer64
+      changes:
+        - createTable:
+            tableName: bank_cards
+            columns:
+              - column:
+                  type: BIGINT
+                  name: id
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_bank_cards
+              - column:
+                  type: VARCHAR(16)
+                  name: card_number
+                  constraints:
+                    nullable: false
+              - column:
+                  type: VARCHAR(100)
+                  name: card_holder
+                  constraints:
+                    nullable: false
+              - column:
+                  type: VARCHAR(255)
+                  name: expiry_date
+                  constraints:
+                    nullable: false
+              - column:
+                  type: SMALLINT
+                  name: status
+                  constraints:
+                    nullable: false
+              - column:
+                  type: DECIMAL(15, 2)
+                  name: balance
+              - column:
+                  name: account_id
+                  type: BIGINT
+
+        - rollback:
+            sql: "DROP TABLE IF EXISTS bank_cards CASCADE"

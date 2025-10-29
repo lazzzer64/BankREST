@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: lazzzer64
+      changes:
+        - createTable:
+            tableName: bank_accounts
+            columns:
+              - column:
+                  type: BIGINT
+                  name: id
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_bank_accounts
+              - column:
+                  type: VARCHAR(255)
+                  name: account_holder
+                  constraints:
+                    nullable: false
+              - column:
+                  name: card_id
+                  type: BIGINT

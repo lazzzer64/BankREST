@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: lazzzer64
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: bank_cards
+            baseColumnNames: account_id
+            constraintName: fk_bank_card_account
+            referencedTableName: bank_accounts
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
