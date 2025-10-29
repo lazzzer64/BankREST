@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: BankREST
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bankrest_db
+    username: postgres
+    password: 73Pudge2481
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  liquibase:
+    enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+#      ddl-auto: validate
+      ddl-auto: none
+    show-sql: true
+  session:
+    jdbc:
+      initialize-schema: always
