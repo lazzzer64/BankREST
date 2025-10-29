@@ -1,6 +1,7 @@
 package ru.lazzzer64.bankrest.DTO;
 
 import jakarta.validation.constraints.*;
+import ru.lazzzer64.bankrest.entity.User;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ public class CardRequestDTO {
 
     @NotBlank(message = "Владелец карты обязателен")
     @Size(min = 2, max = 100, message = "Имя владельца карты должно быть от 2 до 100 символов")
-    private String cardHolder;
+    private User user;
 
     @NotBlank(message = "Срок действия карты обязателен")
     @Pattern(regexp = "(0[1-9]|1[0-2])/[0-9]{2}", message = "Формат срока действия: ММ/ГГ")
@@ -23,9 +24,9 @@ public class CardRequestDTO {
     public CardRequestDTO() {
     }
 
-    public CardRequestDTO(String cardNumber, String cardHolder, String expiryDate) {
+    public CardRequestDTO(String cardNumber, User user, String expiryDate) {
         this.cardNumber = cardNumber;
-        this.cardHolder = cardHolder;
+        this.user = user;
         this.expiryDate = expiryDate;
     }
 
@@ -37,12 +38,12 @@ public class CardRequestDTO {
         this.cardNumber = cardNumber;
     }
 
-    public String getCardHolder() {
-        return cardHolder;
+    public User getUser() {
+        return user;
     }
 
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getExpiryDate() {

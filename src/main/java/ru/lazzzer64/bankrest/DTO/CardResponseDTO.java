@@ -1,6 +1,8 @@
 package ru.lazzzer64.bankrest.DTO;
 
 
+import ru.lazzzer64.bankrest.entity.CardStatus;
+
 import java.math.BigDecimal;
 
 public class CardResponseDTO {
@@ -8,7 +10,7 @@ public class CardResponseDTO {
     private String maskedCardNumber;
     private String cardHolder;
     private String expireDate;
-    private String cardStatus;
+    private CardStatus cardStatus;
     private BigDecimal balance;
 
     public CardResponseDTO() {
@@ -30,10 +32,6 @@ public class CardResponseDTO {
         this.maskedCardNumber = maskedCardNumber;
     }
 
-    public String getCardHolder() {
-        return cardHolder;
-    }
-
     public void setCardHolder(String cardHolder) {
         this.cardHolder = cardHolder;
     }
@@ -46,11 +44,11 @@ public class CardResponseDTO {
         this.expireDate = expireDate;
     }
 
-    public String getCardStatus() {
+    public CardStatus getCardStatus() {
         return cardStatus;
     }
 
-    public void setCardStatus(String cardStatus) {
+    public void setCardStatus(CardStatus cardStatus) {
         this.cardStatus = cardStatus;
     }
 

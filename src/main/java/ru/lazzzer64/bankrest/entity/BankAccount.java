@@ -12,9 +12,6 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_holder", nullable = false)
-    private String accountHolder;
-
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Card> cards = new ArrayList<>();
 
@@ -29,7 +26,6 @@ public class BankAccount {
     }
 
     public BankAccount(String accountHolder, List<Card> cards, User user) {
-        this.accountHolder = accountHolder;
         this.cards = cards;
         this.user = user;
     }
@@ -42,20 +38,20 @@ public class BankAccount {
         this.id = id;
     }
 
-    public String getAccountHolder() {
-        return accountHolder;
-    }
-
-    public void setAccountHolder(String accountHolder) {
-        this.accountHolder = accountHolder;
-    }
-
     public List<Card> getCards() {
         return cards;
     }
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     //Бизнес-логика

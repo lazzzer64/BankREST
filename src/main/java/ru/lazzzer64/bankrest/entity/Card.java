@@ -19,9 +19,6 @@ public class Card {
     @Column(name = "card_number", nullable = false, unique = true, length = 16)
     private String cardNumber;
 
-    @Column(name = "card_holder", nullable = false, length = 100)
-    private String cardHolder;
-
     @Column(name = "expiry_date", nullable = false)
     private String expiryDate;
 
@@ -42,10 +39,10 @@ public class Card {
         this.status = CardStatus.ACTIVE;
     }
 
-    public Card(String cardNumber, String cardHolder, String expiryDate) {
+    public Card(String cardNumber, BankAccount bankAccount, String expiryDate) {
         this();
         this.cardNumber = cardNumber;
-        this.cardHolder = cardHolder;
+        this.account = bankAccount;
         this.expiryDate = expiryDate;
     }
 
@@ -64,14 +61,6 @@ public class Card {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
-    }
-
-    public String getCardHolder() {
-        return cardHolder;
-    }
-
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
     }
 
     public String getExpiryDate() {
