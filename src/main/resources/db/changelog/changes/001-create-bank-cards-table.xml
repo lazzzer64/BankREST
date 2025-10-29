@@ -17,16 +17,10 @@
             <column name="expiry_date" type="VARCHAR(5)">
                 <constraints nullable="false"/>
             </column>
-            <column name="cvv" type="VARCHAR(3)"/>
             <column name="status" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
             <column name="balance" type="DECIMAL(15,2)" defaultValue="0.00"/>
-            <column name="currency" type="VARCHAR(3)" defaultValue="RUB"/>
-            <column name="card_type" type="VARCHAR(20)"/>
-            <column name="is_active" type="BOOLEAN" defaultValue="true"/>
-            <column name="created_at" type="DATE"/>
-            <column name="updated_at" type="DATE"/>
             <column name="account_id" type="BIGINT"/>
         </createTable>
 
