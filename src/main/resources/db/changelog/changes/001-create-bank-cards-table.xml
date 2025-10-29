@@ -1,0 +1,51 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="001-create-bank-cards-table" author="dev">
+        <createTable tableName="bank_cards">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="card_number" type="VARCHAR(16)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="card_holder" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_date" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cvv" type="VARCHAR(3)"/>
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="DECIMAL(15,2)" defaultValue="0.00"/>
+            <column name="currency" type="VARCHAR(3)" defaultValue="RUB"/>
+            <column name="card_type" type="VARCHAR(20)"/>
+            <column name="is_active" type="BOOLEAN" defaultValue="true"/>
+            <column name="created_at" type="DATE"/>
+            <column name="updated_at" type="DATE"/>
+            <column name="account_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="bank_cards"
+                                 baseColumnNames="account_id"
+                                 constraintName="fk_card_account"
+                                 referencedTableName="bank_accounts"
+                                 referencedColumnNames="id"/>
+
+        <createIndex tableName="bank_cards" indexName="idx_card_number">
+            <column name="card_number"/>
+        </createIndex>
+
+        <createIndex tableName="bank_cards" indexName="idx_card_status">
+            <column name="status"/>
+        </createIndex>
+
+        <createIndex tableName="bank_cards" indexName="idx_card_holder">
+            <column name="card_holder"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
