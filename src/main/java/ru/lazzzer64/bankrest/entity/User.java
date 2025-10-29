@@ -53,6 +53,14 @@ public class User implements UserDetails {
         return this.username;
     }
 
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
     @Override
     public String toString() {
         return "User{" +
