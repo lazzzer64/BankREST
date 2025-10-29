@@ -20,7 +20,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: card_id
+                  name: cards
                   type: BIGINT
               - column:
                   name: user_id

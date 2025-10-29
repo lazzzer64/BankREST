@@ -5,9 +5,9 @@ databaseChangeLog:
       changes:
         - addForeignKeyConstraint:
             baseTableName: bank_cards
-            baseColumnNames: account_id
-            constraintName: fk_bank_card_account
+            baseColumnNames: account
             referencedTableName: bank_accounts
             referencedColumnNames: id
+            constraintName: fk_account_card
             onDelete: CASCADE
             onUpdate: CASCADE

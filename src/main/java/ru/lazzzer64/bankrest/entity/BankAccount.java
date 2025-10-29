@@ -64,7 +64,7 @@ public class BankAccount {
         card.setAccount(this);
     }
 
-    public void remoceCard(Card card) {
+    public void removeCard(Card card) {
         cards.remove(card);
         card.setAccount(null);
     }

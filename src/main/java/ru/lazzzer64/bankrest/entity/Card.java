@@ -33,7 +33,7 @@ public class Card {
     private BigDecimal balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "cards")
     private BankAccount account;
 
     //Конструкторы

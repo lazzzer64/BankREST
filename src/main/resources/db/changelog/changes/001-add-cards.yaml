@@ -38,7 +38,7 @@ databaseChangeLog:
                   type: DECIMAL(15, 2)
                   name: balance
               - column:
-                  name: account_id
+                  name: account
                   type: BIGINT
 
         - rollback:
