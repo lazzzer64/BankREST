@@ -22,6 +22,9 @@ public class User implements UserDetails {
 
     private String email;
 
+    @OneToOne(mappedBy = "user")
+    private BankAccount bankAccount;
+
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private BankAccount bankAccount;
 
