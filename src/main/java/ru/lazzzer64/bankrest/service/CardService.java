@@ -15,10 +15,12 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
+//    @Autowired
+//    private
+
     public Card createCard(Card card) {
-        // Валидация номера карты (алгоритм Луна)
-        if (!isValidCardNumber(card.getCardNumber())) {
-            throw new IllegalArgumentException("Invalid card number");
+        if(cardRepository.existsByCardNumber(card.getCardNumber())) {
+            throw new RuntimeException("Карта с таким номером уже существует");
         }
 
         return cardRepository.save(card);

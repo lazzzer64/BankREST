@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: lazzzer64
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  type: BIGINT
+                  name: id
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+              - column:
+                  type: VARCHAR(255)
+                  name: username
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  type: VARCHAR(255)
+                  name: password
+                  constraints:
+                    nullable: false
+                    unique: false
+              - column:
+                  type: VARCHAR(255)
+                  name: email
+                  constraints:
+                    nullable: false
+                    unique: true
+        - rollback:
+            sql: "DROP TABLE IF EXISTS bank_cards CASCADE"

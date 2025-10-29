@@ -18,8 +18,21 @@ public class BankAccount {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Card> cards = new ArrayList<>();
 
+    @OneToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
+
     //Геттеры и сеттеры
 
+
+    public BankAccount() {
+    }
+
+    public BankAccount(String accountHolder, List<Card> cards, User user) {
+        this.accountHolder = accountHolder;
+        this.cards = cards;
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
