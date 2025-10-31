@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 public class CardResponseDTO {
     private Long id;
     private String maskedCardNumber;
-    private String cardHolder;
     private String expireDate;
     private CardStatus cardStatus;
     private BigDecimal balance;
@@ -32,9 +31,6 @@ public class CardResponseDTO {
         this.maskedCardNumber = maskedCardNumber;
     }
 
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
-    }
 
     public String getExpireDate() {
         return expireDate;

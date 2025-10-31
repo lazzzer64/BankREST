@@ -34,25 +34,26 @@ public class CardController {
 
     //TODO: Реализовать метод получения всех карт
     @GetMapping
-    public List<Card> getAllCards() {
-        return null;
+    public ResponseEntity<List<CardResponseDTO>> getAllCards() {
+        return ResponseEntity.ok(cardService.getAllCards());
     }
+
 
     //TODO: Реализовать метод получения карты по её ID
     @GetMapping("/{id}")
-    public CardResponseDTO getCardById(){
-        return null;
+    public CardResponseDTO getCardById(@PathVariable Long id) {
+        return cardService.getCardById(id);
     }
 
     //TODO: Реализовать метод изменения полей карты по её ID
     @PutMapping("/{id}")
-    public CardResponseDTO updateCard(){
+    public CardResponseDTO updateCard() {
         return null;
     }
 
     //TODO: Реализовать метод удаления карты по её ID
     @DeleteMapping("/{id}")
-    public String deleteUser(){
+    public String deleteUser() {
         return null;
     }
 }
