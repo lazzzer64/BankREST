@@ -20,11 +20,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  type: VARCHAR(100)
-                  name: card_holder
-                  constraints:
-                    nullable: false
-              - column:
                   type: VARCHAR(255)
                   name: expiry_date
                   constraints:
@@ -38,7 +33,7 @@ databaseChangeLog:
                   type: DECIMAL(15, 2)
                   name: balance
               - column:
-                  name: account
+                  name: account_id
                   type: BIGINT
 
         - rollback:

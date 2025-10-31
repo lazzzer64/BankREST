@@ -30,7 +30,7 @@ public class Card {
     private BigDecimal balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cards")
+//    @JoinColumn(name = "id")
     private BankAccount account;
 
     //Конструкторы
@@ -118,7 +118,6 @@ public class Card {
         return "Card{" +
                 "id=" + id +
                 ", cardNumber='" + cardNumber + '\'' +
-                ", cardHolder='" + cardHolder + '\'' +
                 ", expiryDate='" + expiryDate + '\'' +
                 ", status=" + status +
                 ", balance=" + balance +

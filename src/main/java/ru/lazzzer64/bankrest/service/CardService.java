@@ -1,8 +1,6 @@
 package ru.lazzzer64.bankrest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lazzzer64.bankrest.DTO.CardRequestDTO;
@@ -13,8 +11,8 @@ import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.repository.BankAccountRepository;
 import ru.lazzzer64.bankrest.repository.CardRepository;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +50,10 @@ public class CardService {
         return cardRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Card getFirstCard() {
+        return cardRepository.findById(1L).orElseThrow(() -> new RuntimeException("Такой карты не существует"));
     }
 //
 //    @Transactional(readOnly = true)

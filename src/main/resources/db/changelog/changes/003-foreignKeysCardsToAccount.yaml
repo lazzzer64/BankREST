@@ -5,7 +5,7 @@ databaseChangeLog:
       changes:
         - addForeignKeyConstraint:
             baseTableName: bank_cards
-            baseColumnNames: account
+            baseColumnNames: account_id
             referencedTableName: bank_accounts
             referencedColumnNames: id
             constraintName: fk_account_card

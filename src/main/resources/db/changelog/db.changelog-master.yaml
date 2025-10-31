@@ -1,6 +1,8 @@
 databaseChangeLog:
   - includeAll:
       path: db/changelog/changes/
+  - includeAll:
+      path: db/changelog/data/
 #      relativeToChangelogFile: true
 #      errorIfMissingOrEmpty: true
 

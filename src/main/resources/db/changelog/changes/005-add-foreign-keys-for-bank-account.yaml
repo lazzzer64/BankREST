@@ -4,10 +4,8 @@ databaseChangeLog:
       author: lazzzer64
       changes:
         - addForeignKeyConstraint:
-            baseTableName: bank_accounts
             baseColumnNames: user_id
-            constraintName: fk_user_bank_account
-            referencedTableName: users
+            baseTableName: bank_accounts
+            constraintName: FK_BANK_ACCOUNTS_ON_USER
             referencedColumnNames: id
-            onDelete: CASCADE
-            onUpdate: CASCADE
+            referencedTableName: users

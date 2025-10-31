@@ -16,7 +16,7 @@ public class BankAccount {
     private List<Card> cards = new ArrayList<>();
 
     @OneToOne()
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id")
     private User user;
 
     //Геттеры и сеттеры
@@ -46,13 +46,7 @@ public class BankAccount {
         this.cards = cards;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     //Бизнес-логика
     public void addCard(Card card) {
