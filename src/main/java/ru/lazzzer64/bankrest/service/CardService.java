@@ -3,8 +3,8 @@ package ru.lazzzer64.bankrest.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lazzzer64.bankrest.DTO.CardRequestDTO;
-import ru.lazzzer64.bankrest.DTO.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.CardRequestDTO;
+import ru.lazzzer64.bankrest.dto.CardResponseDTO;
 import ru.lazzzer64.bankrest.entity.BankAccount;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
@@ -12,7 +12,6 @@ import ru.lazzzer64.bankrest.repository.BankAccountRepository;
 import ru.lazzzer64.bankrest.repository.CardRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
