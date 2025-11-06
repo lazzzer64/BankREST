@@ -2,16 +2,14 @@ package ru.lazzzer64.bankrest.service;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lazzzer64.bankrest.dto.user.UserRequestDTO;
+import ru.lazzzer64.bankrest.dto.user.UserRegistrationDTO;
 import ru.lazzzer64.bankrest.dto.user.UserResponseDTO;
 import ru.lazzzer64.bankrest.dto.user.UserUpdateDTO;
 import ru.lazzzer64.bankrest.entity.User;
@@ -33,19 +31,19 @@ public class UserService implements UserDetailsService {
 //    private PasswordEncoder passwordEncoder;
 
     //CREATE - Регистрация нового пользователя
-    public UserResponseDTO createUser(@Valid UserRequestDTO registationDTO) {
-        if (userRepository.existsByUsername(registationDTO.getUsername())) {
+    public UserResponseDTO createUser(@Valid UserRegistrationDTO registrationDTO) {
+        if (userRepository.existsByUsername(registrationDTO.getUsername())) {
             throw new IllegalArgumentException("Пользователь с таким никнеймом уже существует");
         }
 
-        if (userRepository.existsByEmail(registationDTO.getEmail())) {
+        if (userRepository.existsByEmail(registrationDTO.getEmail())) {
             throw new IllegalArgumentException("Пользователь с таким email уже существует");
         }
 
         User user = new User();
-        user.setUsername(registationDTO.getUsername());
-        user.setPassword(registationDTO.getPassword());
-        user.setEmail(registationDTO.getEmail());
+        user.setUsername(registrationDTO.getUsername());
+        user.setPassword(registrationDTO.getPassword());
+        user.setEmail(registrationDTO.getEmail());
 
         User savedUser = userRepository.save(user);
         return converToDTO(savedUser);
