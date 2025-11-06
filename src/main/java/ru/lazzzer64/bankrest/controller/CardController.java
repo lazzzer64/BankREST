@@ -35,7 +35,6 @@ public class CardController {
         }
     }
 
-    //TODO: Реализовать пагинацию
     @GetMapping
     public ResponseEntity<List<CardResponseDTO>> getAllCards() {
         return ResponseEntity.ok(cardService.getAllCards());
