@@ -1,6 +1,9 @@
 package ru.lazzzer64.bankrest.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +35,12 @@ public class CardController {
         }
     }
 
-    //TODO: Реализовать метод получения всех карт
+    //TODO: Реализовать пагинацию
     @GetMapping
-    public ResponseEntity<List<CardResponseDTO>> getAllCards() {
-        return ResponseEntity.ok(cardService.getAllCards());
+    public ResponseEntity<List<CardResponseDTO>> getAllCards(@RequestParam(defaultValue = "0") int page,
+                                                             @RequestParam(defaultValue = "1") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(cardService.getAllCards(pageable));
     }
 
 

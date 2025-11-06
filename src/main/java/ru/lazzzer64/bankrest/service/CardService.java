@@ -1,6 +1,7 @@
 package ru.lazzzer64.bankrest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lazzzer64.bankrest.dto.CardRequestDTO;
@@ -45,7 +46,7 @@ public class CardService {
     }
 
     @Transactional(readOnly = true)
-    public List<CardResponseDTO> getAllCards() {
+    public List<CardResponseDTO> getAllCards(Pageable pageable) {
         return cardRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
