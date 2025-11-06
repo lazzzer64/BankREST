@@ -1,4 +1,4 @@
-package ru.lazzzer64.bankrest.dto;
+package ru.lazzzer64.bankrest.dto.cardDTO;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;

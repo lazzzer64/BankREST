@@ -1,4 +1,4 @@
-package ru.lazzzer64.bankrest.dto;
+package ru.lazzzer64.bankrest.dto.cardDTO;
 
 import jakarta.validation.constraints.*;
 import ru.lazzzer64.bankrest.entity.User;

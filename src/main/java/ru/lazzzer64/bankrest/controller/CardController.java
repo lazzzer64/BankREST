@@ -1,15 +1,11 @@
 package ru.lazzzer64.bankrest.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.lazzzer64.bankrest.dto.CardRequestDTO;
-import ru.lazzzer64.bankrest.dto.CardResponseDTO;
-import ru.lazzzer64.bankrest.entity.Card;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardRequestDTO;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.service.CardService;
 
 import java.util.List;

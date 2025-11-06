@@ -1,11 +1,10 @@
 package ru.lazzzer64.bankrest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lazzzer64.bankrest.dto.CardRequestDTO;
-import ru.lazzzer64.bankrest.dto.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardRequestDTO;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.entity.BankAccount;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
