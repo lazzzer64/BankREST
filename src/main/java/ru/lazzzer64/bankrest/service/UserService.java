@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private AccountService accountService;
+    private CardService cardService;
 
     //CREATE - Регистрация нового пользователя
     public UserResponseDTO createUser(@Valid UserRegistrationDTO registrationDTO) {
@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
 
 
         User savedUser = userRepository.save(user);
-        accountService.createAccount(savedUser);
+        cardService.createCard(savedUser);
 
         return convertToDTO(savedUser);
     }

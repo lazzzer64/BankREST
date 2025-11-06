@@ -1,57 +1,64 @@
 package ru.lazzzer64.bankrest.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-
 
 @Entity
-@Table(name = "bank_cards")
+@Table(name = "cards")
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "card_number", nullable = false, unique = true, length = 16)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User owner;
+
+    @Column(nullable = false, unique = true, length = 16)
     private String cardNumber;
 
-    @Column(name = "expiry_date", nullable = false)
+    @Column(nullable = false)
     private String expiryDate;
 
     @Enumerated
-    @Column(name = "status", nullable = false)
+    @Column(nullable = false)
     private CardStatus status;
 
-    @Column(name = "balance", precision = 15, scale = 2)
+    @Column(precision = 15, scale = 2)
     private BigDecimal balance;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id")
-    private Account account;
 
-    //Конструкторы
     public Card() {
         this.balance = BigDecimal.ZERO;
         this.status = CardStatus.ACTIVE;
     }
 
-    public Card(String cardNumber, Account bankAccount, String expiryDate) {
-        this();
+    public Card(BigDecimal balance, String cardNumber, String expiryDate, Long id, User owner, CardStatus status) {
+        this.balance = balance;
         this.cardNumber = cardNumber;
-        this.account = bankAccount;
         this.expiryDate = expiryDate;
+        this.id = id;
+        this.owner = owner;
+        this.status = status;
     }
 
-    //Геттеры и сеттеры
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public String getCardNumber() {
@@ -70,6 +77,14 @@ public class Card {
         this.expiryDate = expiryDate;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     public CardStatus getStatus() {
         return status;
     }
@@ -78,49 +93,10 @@ public class Card {
         this.status = status;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    //Бизнес-методы
     public String getMaskedCardNumber() {
         if (cardNumber == null || cardNumber.length() < 12) {
             return cardNumber;
         }
         return "**** **** **** " + cardNumber.substring(12);
-    }
-
-    public boolean isExpired() {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
-            YearMonth expiry = YearMonth.parse(expiryDate, formatter);
-            return YearMonth.now().isAfter(expiry);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "id=" + id +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", expiryDate='" + expiryDate + '\'' +
-                ", status=" + status +
-                ", balance=" + balance +
-                ", account=" + account +
-                '}';
     }
 }

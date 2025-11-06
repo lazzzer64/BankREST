@@ -1,77 +1,94 @@
 package ru.lazzzer64.bankrest.service;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lazzzer64.bankrest.dto.cardDTO.CardRequestDTO;
-import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.accountDTO.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.accountDTO.CardUpdateDTO;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
-import ru.lazzzer64.bankrest.repository.AccountRepository;
+import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.repository.CardRepository;
+import ru.lazzzer64.bankrest.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class CardService {
-
     @Autowired
     private CardRepository cardRepository;
 
     @Autowired
-    private AccountRepository bankAccountRepository;
+    private UserRepository userRepository;
 
-    public CardResponseDTO createCard(CardRequestDTO requestDTO) {
-//        BankAccount account = requestDTO.getUser().getBankAccount();
-
+    //CREATE - Создание новой карты при создании нового пользователя
+    public CardResponseDTO createCard(@Valid User user) {
         Card card = new Card();
-        card.setCardNumber(requestDTO.getCardNumber());
-        card.setExpiryDate(requestDTO.getExpiryDate());
-//        card.setAccount(account);
+        card.setOwner(user);
+        card.setCardNumber("1234567890123455");
+        card.setExpiryDate("1010");
         card.setStatus(CardStatus.ACTIVE);
 
         Card savedCard = cardRepository.save(card);
         return convertToDTO(savedCard);
     }
 
-    @Transactional(readOnly = true)
-    public CardResponseDTO getCardById(Long id) {
-        Card card = cardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Карта не найдена с ID: " + id));
-        return convertToDTO(card);
-    }
-
-    @Transactional(readOnly = true)
+    //READ - получить все карты по DTO
     public List<CardResponseDTO> getAllCards() {
-        return cardRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        List<Card> listCard = cardRepository.findAll();
+        List<CardResponseDTO> result = new ArrayList<>();
+        for (Card card : listCard) {
+            result.add(convertToDTO(card));
+        }
+        return result;
     }
 
-    @Transactional(readOnly = true)
-    public CardResponseDTO getCardById() {
+    //READ - получить все карты полностью
+    public List<Card> getAllCardFull() {
+        return cardRepository.findAll();
+    }
+
+    //READ - получить карту по ее Id
+    public CardResponseDTO getAccountDTOById(Long id) {
+        Card findedCard = cardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(("Аккаунт с ID: " + id + " не найден")));
+        return convertToDTO(findedCard);
+    }
+
+    //READ - получить карту по ее пользователю
+    public CardResponseDTO getCardDTOByUser(User user) {
+        Card findedCard = cardRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException(("Аккаунт связанный с: " + user.getUsername() + " не найден")));
+        return convertToDTO(findedCard);
+    }
+
+    //READ - получить карту по имени пользователя
+    public CardResponseDTO getCardDTOByUsername(String username) {
+        Card findedCard = cardRepository.findById(userRepository.findByUsername(username).get().getId())
+                .orElseThrow(() -> new RuntimeException(("Аккаунт связанный с: " + username + " не найден")));
+        return convertToDTO(findedCard);
+    }
+
+    //UPDATE - Обновить данные карты
+    public CardResponseDTO updateCard(Long id, CardUpdateDTO dto) {
         return null;
     }
 
-    public CardResponseDTO updateCardStatus(Long id, CardStatus status) {
-        Card card = cardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Карта не найдена с ID: " + id));
-
-        card.setStatus(status);
-
-        Card updatedCard = cardRepository.save(card);
-        return convertToDTO(updatedCard);
+    //DELETE - Удалить аккаунт
+    public void deleteCard(Long id) {
+        cardRepository.deleteById(id);
     }
 
     private CardResponseDTO convertToDTO(Card card) {
         CardResponseDTO dto = new CardResponseDTO();
         dto.setId(card.getId());
-        dto.setMaskedCardNumber(card.getMaskedCardNumber());
-        dto.setExpireDate(card.getExpiryDate());
-        dto.setCardStatus(card.getStatus());
         dto.setBalance(card.getBalance());
+        dto.setCardStatus(card.getStatus());
+        dto.setCardNumber(card.getMaskedCardNumber());
+        dto.setOwner(card.getOwner());
         return dto;
     }
 }

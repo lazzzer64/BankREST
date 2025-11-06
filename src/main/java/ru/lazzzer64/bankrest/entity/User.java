@@ -1,5 +1,6 @@
 package ru.lazzzer64.bankrest.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,8 +23,9 @@ public class User implements UserDetails {
 
     private String email;
 
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//    private Account account;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Card> card;
 
     public User() {
     }

@@ -4,54 +4,81 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.lazzzer64.bankrest.dto.cardDTO.CardRequestDTO;
-import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.accountDTO.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.accountDTO.CardUpdateDTO;
+import ru.lazzzer64.bankrest.entity.Card;
+import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.service.CardService;
+import ru.lazzzer64.bankrest.service.UserService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cards")
 public class CardController {
-
     private final CardService cardService;
 
-    public CardController(CardService cardService) {
+
+    private final UserService userService;
+
+    public CardController(CardService cardService, UserService userService) {
         this.cardService = cardService;
+        this.userService = userService;
     }
 
-    //TODO: Реализовать метод создания карты
+    //CREATE - Создать карту
     @PostMapping
-    public ResponseEntity<CardResponseDTO> createCard(@Valid CardRequestDTO requestDTO) {
+    public ResponseEntity<CardResponseDTO> createCard(@Valid
+                                                         @RequestBody User user) {
         try {
-            CardResponseDTO createdCard = cardService.createCard(requestDTO);
+            CardResponseDTO createdCard = cardService.createCard(user);
             return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
+    //READ - Получить все аккаунты
     @GetMapping
     public ResponseEntity<List<CardResponseDTO>> getAllCards() {
         return ResponseEntity.ok(cardService.getAllCards());
     }
 
+    //READ - Получить все аккаунты с полной информацией
+//    @GetMapping("full")
+//    public ResponseEntity<List<Card>> getAllAccountsFull() {
+//        return ResponseEntity.ok(cardService.getAllCards());
+//    }
 
-    //TODO: Реализовать метод получения карты по её ID
+    //READ - Получить аккаунт по пользователю
+    @GetMapping("/username")
+    public ResponseEntity<CardResponseDTO> getCardByUser(@Valid @RequestBody User user) {
+        return ResponseEntity.ok(cardService.getCardDTOByUser(user));
+    }
+
+    //READ - Получить аккаунт по имени пользователя
+    @GetMapping("/findByUsername/{username}")
+    public ResponseEntity<CardResponseDTO> getCardByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(cardService.getCardDTOByUsername(username));
+    }
+
+    //READ - получить аккаунт по его ID
     @GetMapping("/{id}")
-    public CardResponseDTO getCardById(@PathVariable Long id) {
-        return cardService.getCardById(id);
+    public ResponseEntity<CardResponseDTO> getCardById(@PathVariable Long id) {
+        return ResponseEntity.ok(cardService.getAccountDTOById(id));
     }
 
-    //TODO: Реализовать метод изменения полей карты по её ID
+    //UPDATE - Обновить данные аккаунта
     @PutMapping("/{id}")
-    public CardResponseDTO updateCard() {
-        return null;
+    public ResponseEntity<CardResponseDTO> updateCard(@PathVariable Long id,
+                                                         @Valid @RequestBody CardUpdateDTO accountUpdateDTO) {
+        return ResponseEntity.ok(cardService.updateCard(id, accountUpdateDTO));
     }
 
-    //TODO: Реализовать метод удаления карты по её ID
+    //DELETE - Удалить аккаунт
     @DeleteMapping("/{id}")
-    public String deleteUser() {
-        return null;
+    public ResponseEntity deleteCard(@PathVariable Long id) {
+        cardService.deleteCard(id);
+        return ResponseEntity.ok().build();
     }
 }

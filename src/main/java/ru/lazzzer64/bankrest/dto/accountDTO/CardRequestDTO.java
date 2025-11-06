@@ -1,33 +1,35 @@
-package ru.lazzzer64.bankrest.dto.cardDTO;
+package ru.lazzzer64.bankrest.dto.accountDTO;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.entity.User;
 
-import java.math.BigDecimal;
-
 public class CardRequestDTO {
-
     @NotBlank(message = "Номер карты обязателен")
     @Pattern(regexp = "\\d{16}", message = "Номер карты должен содержать 16 цифр")
     private String cardNumber;
 
     @NotBlank(message = "Владелец карты обязателен")
     @Size(min = 2, max = 100, message = "Имя владельца карты должно быть от 2 до 100 символов")
-    private User user;
+    private User owner;
 
     @NotBlank(message = "Срок действия карты обязателен")
     @Pattern(regexp = "(0[1-9]|1[0-2])/[0-9]{2}", message = "Формат срока действия: ММ/ГГ")
     private String expiryDate;
 
-    private BigDecimal initialBalance = BigDecimal.ZERO;
+    private CardStatus status = CardStatus.ACTIVE;
 
     public CardRequestDTO() {
     }
 
-    public CardRequestDTO(String cardNumber, User user, String expiryDate) {
+    public CardRequestDTO(String cardNumber, String expiryDate,
+                          User owner, CardStatus status) {
         this.cardNumber = cardNumber;
-        this.user = user;
         this.expiryDate = expiryDate;
+        this.owner = owner;
+        this.status = status;
     }
 
     public String getCardNumber() {
@@ -38,14 +40,6 @@ public class CardRequestDTO {
         this.cardNumber = cardNumber;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getExpiryDate() {
         return expiryDate;
     }
@@ -54,11 +48,19 @@ public class CardRequestDTO {
         this.expiryDate = expiryDate;
     }
 
-    public BigDecimal getInitialBalance() {
-        return initialBalance;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setInitialBalance(BigDecimal initialBalance) {
-        this.initialBalance = initialBalance;
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public CardStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CardStatus status) {
+        this.status = status;
     }
 }
