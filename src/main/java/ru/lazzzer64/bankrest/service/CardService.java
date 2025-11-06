@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardRequestDTO;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
-import ru.lazzzer64.bankrest.entity.BankAccount;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.repository.BankAccountRepository;

@@ -1,8 +1,8 @@
 package ru.lazzzer64.bankrest.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.lazzzer64.bankrest.entity.BankAccount;
+import ru.lazzzer64.bankrest.entity.Account;
 
-public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
+public interface BankAccountRepository extends JpaRepository<Account, Long> {
 
 }

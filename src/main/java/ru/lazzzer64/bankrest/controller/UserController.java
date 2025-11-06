@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lazzzer64.bankrest.dto.user.UserRegistrationDTO;
-import ru.lazzzer64.bankrest.dto.user.UserRequestDTO;
 import ru.lazzzer64.bankrest.dto.user.UserResponseDTO;
 import ru.lazzzer64.bankrest.dto.user.UserUpdateDTO;
 import ru.lazzzer64.bankrest.entity.User;
@@ -22,36 +21,40 @@ public class UserController {
         this.userService = userService;
     }
 
+    //CREATE - Создать пользователя
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRegistrationDTO registrationDTO) {
         try {
             UserResponseDTO createdUser = userService.createUser(registrationDTO);
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
+    //READ - Получить всех пользователей
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    //READ - получить пользователя по его ID
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserDTOById(id));
     }
 
+    //UPDATE - Обновить данные пользователя
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid UserUpdateDTO userUpdateDTO) {
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id,
+                                                      @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
         return ResponseEntity.ok(userService.updateUser(id, userUpdateDTO));
     }
 
+    //DELETE - Удалить пользователя
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
-
-
 }

@@ -7,10 +7,10 @@ databaseChangeLog:
             tableName: users
             file: db/changelog/data/users.csv
             separator: ','
-#        - loadData:
-#            tableName: bank_accounts
-#            file: db/changelog/data/bank_accounts.csv
-#            separator: ','
+        - loadData:
+            tableName: accounts
+            file: db/changelog/data/accounts.csv
+            separator: ','
 #        - loadData:
 #            tableName: bank_cards
 #            file: db/changelog/data/bank_cards.csv

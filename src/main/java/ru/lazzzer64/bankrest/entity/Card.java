@@ -4,7 +4,6 @@ package ru.lazzzer64.bankrest.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
@@ -31,7 +30,7 @@ public class Card {
 
     @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "id")
-    private BankAccount account;
+    private Account account;
 
     //Конструкторы
     public Card() {
@@ -39,7 +38,7 @@ public class Card {
         this.status = CardStatus.ACTIVE;
     }
 
-    public Card(String cardNumber, BankAccount bankAccount, String expiryDate) {
+    public Card(String cardNumber, Account bankAccount, String expiryDate) {
         this();
         this.cardNumber = cardNumber;
         this.account = bankAccount;
@@ -87,11 +86,11 @@ public class Card {
         this.balance = balance;
     }
 
-    public BankAccount getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(BankAccount account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 

@@ -1,7 +1,5 @@
 package ru.lazzzer64.bankrest.dto.user;
 
-import ru.lazzzer64.bankrest.entity.BankAccount;
-
 public class UserRegistrationDTO {
     private String username;
     private String password;
