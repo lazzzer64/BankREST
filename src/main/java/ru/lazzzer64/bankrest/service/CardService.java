@@ -46,21 +46,16 @@ public class CardService {
     }
 
     @Transactional(readOnly = true)
-    public List<CardResponseDTO> getAllCards(Pageable pageable) {
+    public List<CardResponseDTO> getAllCards() {
         return cardRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public Card getFirstCard() {
-        return cardRepository.findById(1L).orElseThrow(() -> new RuntimeException("Такой карты не существует"));
+    @Transactional(readOnly = true)
+    public CardResponseDTO getCardById() {
+        return null;
     }
-//
-//    @Transactional(readOnly = true)
-//    public Page<CardResponseDTO> getCardsByAccountId(BankAccount bankAccount, Pageable pageable) {
-//        return cardRepository.findByAccount(bankAccount, pageable)
-//                .map(this::convertToDTO);
-//    }
 
     public CardResponseDTO updateCardStatus(Long id, CardStatus status) {
         Card card = cardRepository.findById(id)

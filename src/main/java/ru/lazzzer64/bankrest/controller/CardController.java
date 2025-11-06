@@ -37,10 +37,8 @@ public class CardController {
 
     //TODO: Реализовать пагинацию
     @GetMapping
-    public ResponseEntity<List<CardResponseDTO>> getAllCards(@RequestParam(defaultValue = "0") int page,
-                                                             @RequestParam(defaultValue = "1") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(cardService.getAllCards(pageable));
+    public ResponseEntity<List<CardResponseDTO>> getAllCards() {
+        return ResponseEntity.ok(cardService.getAllCards());
     }
 
 
