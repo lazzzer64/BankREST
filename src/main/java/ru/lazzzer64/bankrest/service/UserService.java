@@ -29,8 +29,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private BankAccountRepository bankAccountRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     //CREATE - Регистрация нового пользователя
     public UserResponseDTO createUser(@Valid UserRequestDTO registationDTO) {
@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
 
         User user = new User();
         user.setUsername(registationDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(registationDTO.getPassword()));
+        user.setPassword(registationDTO.getPassword());
         user.setEmail(registationDTO.getEmail());
 
         User savedUser = userRepository.save(user);
@@ -86,7 +86,7 @@ public class UserService implements UserDetailsService {
     }
 
     // READ - Получение всех пользователей (только для админов)
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

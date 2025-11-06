@@ -25,12 +25,12 @@ public class CardService {
     private BankAccountRepository bankAccountRepository;
 
     public CardResponseDTO createCard(CardRequestDTO requestDTO) {
-        BankAccount account = requestDTO.getUser().getBankAccount();
+//        BankAccount account = requestDTO.getUser().getBankAccount();
 
         Card card = new Card();
         card.setCardNumber(requestDTO.getCardNumber());
         card.setExpiryDate(requestDTO.getExpiryDate());
-        card.setAccount(account);
+//        card.setAccount(account);
         card.setStatus(CardStatus.ACTIVE);
 
         Card savedCard = cardRepository.save(card);

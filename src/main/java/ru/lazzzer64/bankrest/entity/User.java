@@ -22,8 +22,8 @@ public class User implements UserDetails {
 
     private String email;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private BankAccount bankAccount;
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    private BankAccount bankAccount;
 
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private BankAccount bankAccount;
@@ -53,13 +53,13 @@ public class User implements UserDetails {
         return this.username;
     }
 
-    public BankAccount getBankAccount() {
-        return bankAccount;
-    }
-
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
-    }
+//    public BankAccount getBankAccount() {
+//        return bankAccount;
+//    }
+//
+//    public void setBankAccount(BankAccount bankAccount) {
+//        this.bankAccount = bankAccount;
+//    }
 
     @Override
     public String toString() {
