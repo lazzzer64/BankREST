@@ -17,12 +17,6 @@ databaseChangeLog:
 #              - column:
 #                  name: cards
 #                  type: BIGINT
-              - column:
-                  name: user_id
-                  type: BIGINT
-        - addForeignKeyConstraint:
-            baseColumnNames: user_id
-            baseTableName: accounts
-            constraintName: FK_ACCOUNTS_ON_USER
-            referencedColumnNames: id
-            referencedTableName: users
+#              - column:
+#                  name: user_id
+#                  type: BIGINT

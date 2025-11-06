@@ -7,7 +7,7 @@ import ru.lazzzer64.bankrest.dto.cardDTO.CardRequestDTO;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
-import ru.lazzzer64.bankrest.repository.BankAccountRepository;
+import ru.lazzzer64.bankrest.repository.AccountRepository;
 import ru.lazzzer64.bankrest.repository.CardRepository;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class CardService {
     private CardRepository cardRepository;
 
     @Autowired
-    private BankAccountRepository bankAccountRepository;
+    private AccountRepository bankAccountRepository;
 
     public CardResponseDTO createCard(CardRequestDTO requestDTO) {
 //        BankAccount account = requestDTO.getUser().getBankAccount();

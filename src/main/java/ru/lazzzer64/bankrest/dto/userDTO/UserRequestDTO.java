@@ -1,4 +1,4 @@
-package ru.lazzzer64.bankrest.dto.user;
+package ru.lazzzer64.bankrest.dto.userDTO;
 
 
 import jakarta.validation.constraints.NotBlank;

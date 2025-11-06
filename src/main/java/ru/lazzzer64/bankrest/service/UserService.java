@@ -9,11 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lazzzer64.bankrest.dto.user.UserRegistrationDTO;
-import ru.lazzzer64.bankrest.dto.user.UserResponseDTO;
-import ru.lazzzer64.bankrest.dto.user.UserUpdateDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UserRegistrationDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UserResponseDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UserUpdateDTO;
 import ru.lazzzer64.bankrest.entity.User;
-import ru.lazzzer64.bankrest.repository.BankAccountRepository;
 import ru.lazzzer64.bankrest.repository.UserRepository;
 
 import java.util.List;
@@ -25,10 +24,7 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private BankAccountRepository bankAccountRepository;
-
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    private AccountService accountService;
 
     //CREATE - Регистрация нового пользователя
     public UserResponseDTO createUser(@Valid UserRegistrationDTO registrationDTO) {
@@ -45,8 +41,11 @@ public class UserService implements UserDetailsService {
         user.setPassword(registrationDTO.getPassword());
         user.setEmail(registrationDTO.getEmail());
 
+
         User savedUser = userRepository.save(user);
-        return converToDTO(savedUser);
+        accountService.createAccount(savedUser);
+
+        return convertToDTO(savedUser);
     }
 
     //READ - Получение пользователя по username
@@ -61,7 +60,7 @@ public class UserService implements UserDetailsService {
         User findedUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Пользователь с ID: " + id + " не найден"));
 
-        return converToDTO(findedUser);
+        return convertToDTO(findedUser);
     }
 
     //READ - Получение пользователя по id для работы
@@ -80,7 +79,7 @@ public class UserService implements UserDetailsService {
         User receivedUser =  userRepository.findByUsername(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-        return converToDTO(receivedUser);
+        return convertToDTO(receivedUser);
     }
 
     // READ - Получение всех пользователей (только для админов)
@@ -113,7 +112,7 @@ public class UserService implements UserDetailsService {
         }
 
         User updatedUser = userRepository.save(user);
-        return converToDTO(updatedUser);
+        return convertToDTO(updatedUser);
     }
 
     // DELETE - Удаление пользователя
@@ -130,7 +129,7 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByUsername(email);
     }
 
-    private UserResponseDTO converToDTO(User user) {
+    private UserResponseDTO convertToDTO(User user) {
         UserResponseDTO dto = new UserResponseDTO();
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());

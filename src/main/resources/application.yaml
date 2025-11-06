@@ -14,9 +14,12 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-#      ddl-auto: validate
-      ddl-auto: none
+      ddl-auto: update
+#      ddl-auto: none
     show-sql: true
   session:
     jdbc:
       initialize-schema: always
+  jackson:
+    serialization:
+      fail-on-empty-beans: false

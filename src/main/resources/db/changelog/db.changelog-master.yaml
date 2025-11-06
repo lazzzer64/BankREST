@@ -3,12 +3,12 @@ databaseChangeLog:
   #      path: db/changelog/changes/
   #  - includeAll:
   #      path: db/changelog/data/
-
-  - include:
-      file: db/changelog/changes/004-add-users.yaml
-
-  - include:
-      file: db/changelog/changes/002-add-accounts.yaml
-
-  - include:
-      file: db/changelog/changes/006-insertData.yaml
+#
+#  - include:
+#      file: db/changelog/changes/004-add-users.yaml
+#
+#  - include:
+#      file: db/changelog/changes/002-add-accounts.yaml
+#
+#  - include:
+#      file: db/changelog/changes/006-insertData.yaml

@@ -32,5 +32,14 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
+              - column:
+                type: BIGINT
+                name: account_id
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: users
+            constraintName: FK_ACCOUNTS_ON_USER
+            referencedColumnNames: account
+            referencedTableName: accounts
         - rollback:
             sql: "DROP TABLE IF EXISTS bank_cards CASCADE"

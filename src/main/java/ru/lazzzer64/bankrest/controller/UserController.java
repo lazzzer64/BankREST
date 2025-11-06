@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.lazzzer64.bankrest.dto.user.UserRegistrationDTO;
-import ru.lazzzer64.bankrest.dto.user.UserResponseDTO;
-import ru.lazzzer64.bankrest.dto.user.UserUpdateDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UserRegistrationDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UserResponseDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UserUpdateDTO;
 import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.service.UserService;
 

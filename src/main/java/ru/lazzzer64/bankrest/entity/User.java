@@ -22,12 +22,8 @@ public class User implements UserDetails {
 
     private String email;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Account account;
-
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private BankAccount bankAccount;
-
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    private Account account;
 
     public User() {
     }
@@ -51,14 +47,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.username;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.lazzzer64.bankrest.dto.user;
+package ru.lazzzer64.bankrest.dto.userDTO;
 
 public class UserRegistrationDTO {
     private String username;

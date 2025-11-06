@@ -1,20 +1,10 @@
-package ru.lazzzer64.bankrest.dto.user;
+package ru.lazzzer64.bankrest.dto.userDTO;
 
-public class UserResponseDTO {
-    private Long id;
+public class UserUpdateDTO {
     private String username;
     private String email;
 
-    public UserResponseDTO() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Конструкторы, геттеры, сеттеры
 
     public String getUsername() {
         return username;
