@@ -1,12 +1,11 @@
 databaseChangeLog:
-  - includeAll:
-      path: db/changelog/changes/
-  - includeAll:
-      path: db/changelog/data/
-#      relativeToChangelogFile: true
-#      errorIfMissingOrEmpty: true
+  #  - includeAll:
+  #      path: db/changelog/changes/
+  #  - includeAll:
+  #      path: db/changelog/data/
 
-#  - includeAll:
-#      path: db/changelog/data/
-#      relativeToChangelogFile: true
-#      errorIfMissingOrEmpty: true
+  - include:
+      file: db/changelog/changes/004-add-users.yaml
+
+  - include:
+      file: db/changelog/changes/006-insertData.yaml
