@@ -41,9 +41,8 @@ public class UserService implements UserDetailsService {
         user.setPassword(registrationDTO.getPassword());
         user.setEmail(registrationDTO.getEmail());
 
-
         User savedUser = userRepository.save(user);
-        cardService.createCard(savedUser);
+        cardService.createCard(savedUser.getId());
 
         return convertToDTO(savedUser);
     }
@@ -65,7 +64,7 @@ public class UserService implements UserDetailsService {
 
     //READ - Получение пользователя по id для работы
     public User getUserById(Long id) {
-       return userRepository.findById(id)
+        return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Пользователь с ID: " + id + " не найден"));
     }
 
@@ -76,7 +75,7 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("Пользователь не аутентифицирован");
         }
 
-        User receivedUser =  userRepository.findByUsername(authentication.getName())
+        User receivedUser = userRepository.findByUsername(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         return convertToDTO(receivedUser);

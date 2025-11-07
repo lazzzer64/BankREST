@@ -1,4 +1,4 @@
-package ru.lazzzer64.bankrest.security;
+package ru.lazzzer64.bankrest.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

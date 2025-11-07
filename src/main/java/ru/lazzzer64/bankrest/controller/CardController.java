@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lazzzer64.bankrest.dto.accountDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.dto.accountDTO.CardUpdateDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UserResponseDTO;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.service.CardService;
@@ -29,9 +30,9 @@ public class CardController {
     //CREATE - Создать карту
     @PostMapping
     public ResponseEntity<CardResponseDTO> createCard(@Valid
-                                                         @RequestBody User user) {
+                                                         @RequestBody UserResponseDTO userResponseDTO) {
         try {
-            CardResponseDTO createdCard = cardService.createCard(user);
+            CardResponseDTO createdCard = cardService.createCard(userResponseDTO.getId());
             return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

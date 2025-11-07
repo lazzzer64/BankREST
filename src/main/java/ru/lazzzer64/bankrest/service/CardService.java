@@ -12,6 +12,7 @@ import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.repository.CardRepository;
 import ru.lazzzer64.bankrest.repository.UserRepository;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +26,11 @@ public class CardService {
     private UserRepository userRepository;
 
     //CREATE - Создание новой карты при создании нового пользователя
-    public CardResponseDTO createCard(@Valid User user) {
+    public CardResponseDTO createCard(Long userId) {
         Card card = new Card();
-        card.setOwner(user);
-        card.setCardNumber("1234567890123455");
+        card.setOwner(userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException(("Аккаунт с ID: " + userId + " не найден"))));
+        card.setCardNumber(generateRandom16Digit());
         card.setExpiryDate("1010");
         card.setStatus(CardStatus.ACTIVE);
 
@@ -90,5 +92,17 @@ public class CardService {
         dto.setCardNumber(card.getMaskedCardNumber());
         dto.setOwner(card.getOwner());
         return dto;
+    }
+
+    // С использованием SecureRandom (рекомендуется)
+    public static String generateRandom16Digit() {
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(16);
+
+        for (int i = 0; i < 16; i++) {
+            sb.append(random.nextInt(10)); // цифры 0-9
+        }
+
+        return sb.toString();
     }
 }
