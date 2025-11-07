@@ -6,8 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -23,6 +25,11 @@ public class User implements UserDetails {
 
     private String email;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private List<String> roles = new ArrayList<>();
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Card> card;
@@ -30,15 +37,18 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email, List<String> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override

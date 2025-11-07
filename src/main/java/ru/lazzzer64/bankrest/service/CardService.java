@@ -1,11 +1,10 @@
 package ru.lazzzer64.bankrest.service;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lazzzer64.bankrest.dto.accountDTO.CardResponseDTO;
-import ru.lazzzer64.bankrest.dto.accountDTO.CardUpdateDTO;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardUpdateDTO;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.entity.User;

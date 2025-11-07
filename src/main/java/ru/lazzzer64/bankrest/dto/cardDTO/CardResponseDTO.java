@@ -1,4 +1,4 @@
-package ru.lazzzer64.bankrest.dto.accountDTO;
+package ru.lazzzer64.bankrest.dto.cardDTO;
 
 import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.entity.User;

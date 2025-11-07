@@ -136,4 +136,8 @@ public class UserService implements UserDetailsService {
 
         return dto;
     }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
