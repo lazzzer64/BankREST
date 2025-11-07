@@ -2,6 +2,7 @@ package ru.lazzzer64.bankrest.service;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -52,6 +54,11 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с ником + " + username + " не найден"));
+    }
+
+    //READ - для SpringSecurity
+    public Optional<User> getByLogin(@NonNull String login) {
+        return userRepository.findByUsername(login);
     }
 
     //READ - Получение пользователя по id для отправки

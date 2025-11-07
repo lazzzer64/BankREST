@@ -26,5 +26,8 @@ spring:
   main:
     allow-circular-references: true
 jwt:
-  secret: mySuperSecretKeyThatIsVeryLongAndSecure12345!
-  expiration: 86400000 # 24 hours in milliseconds
+  secret:
+    access: qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w==
+    refresh: zL1HB3Pch05Avfynovxrf/kpF9O2m4NCWKJUjEp27s9J2jEG3ifiKCGylaZ8fDeoONSTJP/wAzKawB8F9rOMNg==
+#  secret: mySuperSecretKeyThatIsVeryLongAndSecure12345!
+#  expiration: 86400000 # 24 hours in milliseconds
