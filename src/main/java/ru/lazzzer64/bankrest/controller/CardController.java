@@ -44,12 +44,6 @@ public class CardController {
         return ResponseEntity.ok(cardService.getAllCards());
     }
 
-    //READ - Получить все аккаунты с полной информацией
-//    @GetMapping("full")
-//    public ResponseEntity<List<Card>> getAllAccountsFull() {
-//        return ResponseEntity.ok(cardService.getAllCards());
-//    }
-
     //READ - Получить аккаунт по пользователю
     @GetMapping("/username")
     public ResponseEntity<CardResponseDTO> getCardByUser(@Valid @RequestBody User user) {
