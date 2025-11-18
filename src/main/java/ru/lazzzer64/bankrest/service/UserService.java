@@ -1,13 +1,14 @@
 package ru.lazzzer64.bankrest.service;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lazzzer64.bankrest.dto.userDTO.UserRegistrationDTO;
@@ -21,12 +22,13 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CardService cardService;
+    private final CardService cardService;
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
     //CREATE - Регистрация нового пользователя
     public UserResponseDTO createUser(@Valid UserRegistrationDTO registrationDTO) {
@@ -40,7 +42,7 @@ public class UserService implements UserDetailsService {
 
         User user = new User();
         user.setUsername(registrationDTO.getUsername());
-        user.setPassword(registrationDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
         user.setEmail(registrationDTO.getEmail());
 
         User savedUser = userRepository.save(user);
@@ -57,8 +59,9 @@ public class UserService implements UserDetailsService {
     }
 
     //READ - для SpringSecurity
-    public Optional<User> getByLogin(@NonNull String login) {
-        return userRepository.findByUsername(login);
+    public User getByLogin(@NonNull String login) {
+        return userRepository.findByUsername(login)
+                .orElseThrow(() -> new RuntimeException("Пользователь с никнеймом: " + login + " не найден"));
     }
 
     //READ - Получение пользователя по id для отправки
@@ -140,6 +143,7 @@ public class UserService implements UserDetailsService {
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
+        dto.setRoles(user.getRoles());
 
         return dto;
     }

@@ -3,15 +3,19 @@ package ru.lazzzer64.bankrest.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardUpdateDTO;
 import ru.lazzzer64.bankrest.dto.userDTO.UserResponseDTO;
+import ru.lazzzer64.bankrest.dto.userDTO.UsernameResponseDTO;
 import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.service.CardService;
 import ru.lazzzer64.bankrest.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/cards")
@@ -28,10 +32,13 @@ public class CardController {
 
     //CREATE - Создать карту
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<CardResponseDTO> createCard(@Valid
-                                                         @RequestBody UserResponseDTO userResponseDTO) {
+                                                      @RequestBody UsernameResponseDTO usernameResponseDTO) {
         try {
-            CardResponseDTO createdCard = cardService.createCard(userResponseDTO.getId());
+            CardResponseDTO createdCard = cardService.createCard(
+                    userService.getByLogin(usernameResponseDTO.getUsername())
+                            .getId());
             return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -65,7 +72,7 @@ public class CardController {
     //UPDATE - Обновить данные аккаунта
     @PutMapping("/{id}")
     public ResponseEntity<CardResponseDTO> updateCard(@PathVariable Long id,
-                                                         @Valid @RequestBody CardUpdateDTO accountUpdateDTO) {
+                                                      @Valid @RequestBody CardUpdateDTO accountUpdateDTO) {
         return ResponseEntity.ok(cardService.updateCard(id, accountUpdateDTO));
     }
 

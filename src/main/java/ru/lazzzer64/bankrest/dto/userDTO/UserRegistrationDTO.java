@@ -1,11 +1,11 @@
 package ru.lazzzer64.bankrest.dto.userDTO;
 
 public class UserRegistrationDTO {
+
     private String username;
     private String password;
     private String email;
 
-    // Конструкторы, геттеры, сеттеры
     public UserRegistrationDTO() {
     }
 
@@ -15,7 +15,6 @@ public class UserRegistrationDTO {
         this.email = email;
     }
 
-    // Геттеры и сеттеры
     public String getUsername() {
         return username;
     }
