@@ -3,19 +3,17 @@ package ru.lazzzer64.bankrest.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardUpdateDTO;
-import ru.lazzzer64.bankrest.dto.userDTO.UserResponseDTO;
 import ru.lazzzer64.bankrest.dto.userDTO.UsernameResponseDTO;
+import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.service.CardService;
 import ru.lazzzer64.bankrest.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/cards")
@@ -76,7 +74,21 @@ public class CardController {
         return ResponseEntity.ok(cardService.updateCard(id, accountUpdateDTO));
     }
 
-    //DELETE - Удалить аккаунт
+    //UPDATE - Заблокировать карту
+    @PutMapping("/{id}/block")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<CardStatus> blockCard(@PathVariable Long id) {
+        return ResponseEntity.ok(cardService.blockCard(id).getCardStatus());
+    }
+
+    //UPDATE - Активировать карту
+    @PutMapping("/{id}/active")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<CardStatus> activeCard(@PathVariable Long id) {
+        return ResponseEntity.ok(cardService.activeCard(id).getCardStatus());
+    }
+
+    //DELETE - Удалить карту
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCard(@PathVariable Long id) {
         cardService.deleteCard(id);

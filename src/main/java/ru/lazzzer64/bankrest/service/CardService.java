@@ -73,9 +73,36 @@ public class CardService {
         return convertToDTO(findedCard);
     }
 
+    //READ - получить карту по ее ID
+    public Card getCardById(Long id) {
+        return cardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(("Карта с id: " + id + " не найдена")));
+    }
+
     //UPDATE - Обновить данные карты
     public CardResponseDTO updateCard(Long id, CardUpdateDTO dto) {
         return null;
+    }
+
+
+    //UPDATE - Заблокировать карту
+    public CardResponseDTO blockCard(Long id) {
+        Card card = new Card();
+        card = cardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Карта не найдена"));
+        card.setStatus(CardStatus.BLOCKED);
+        cardRepository.save(card);
+        return convertToDTO(card);
+    }
+
+    //UPDATE - Активировать карту
+    public CardResponseDTO activeCard(Long id) {
+        Card card = new Card();
+        card = cardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Карта не найдена"));
+        card.setStatus(CardStatus.ACTIVE);
+        cardRepository.save(card);
+        return convertToDTO(card);
     }
 
     //DELETE - Удалить аккаунт
@@ -104,4 +131,6 @@ public class CardService {
 
         return sb.toString();
     }
+
+
 }

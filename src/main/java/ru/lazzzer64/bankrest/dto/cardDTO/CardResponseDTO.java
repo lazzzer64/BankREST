@@ -13,7 +13,6 @@ public class CardResponseDTO {
     private CardStatus cardStatus;
     private BigDecimal balance;
 
-
     public CardResponseDTO() {
     }
 
