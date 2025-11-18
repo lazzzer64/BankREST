@@ -105,7 +105,7 @@ public class CardService {
         return convertToDTO(card);
     }
 
-    //DELETE - Удалить аккаунт
+    //DELETE - Удалить карту
     public void deleteCard(Long id) {
         cardRepository.deleteById(id);
     }

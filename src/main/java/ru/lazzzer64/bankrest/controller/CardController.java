@@ -90,8 +90,9 @@ public class CardController {
 
     //DELETE - Удалить карту
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity deleteCard(@PathVariable Long id) {
         cardService.deleteCard(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Карта с id: " + id + " удалена!");
     }
 }
