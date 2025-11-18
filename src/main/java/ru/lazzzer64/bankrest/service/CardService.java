@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseNumberDTO;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardUpdateDTO;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
@@ -14,6 +15,7 @@ import ru.lazzzer64.bankrest.repository.UserRepository;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,11 +40,11 @@ public class CardService {
     }
 
     //READ - получить все карты по DTO
-    public List<CardResponseDTO> getAllCards() {
+    public List<CardResponseNumberDTO> getAllCards() {
         List<Card> listCard = cardRepository.findAll();
-        List<CardResponseDTO> result = new ArrayList<>();
+        List<CardResponseNumberDTO> result = new ArrayList<>();
         for (Card card : listCard) {
-            result.add(convertToDTO(card));
+            result.add(converToNumberDTO(card));
         }
         return result;
     }
@@ -66,11 +68,16 @@ public class CardService {
         return convertToDTO(findedCard);
     }
 
-    //READ - получить карту по имени пользователя
-    public CardResponseDTO getCardDTOByUsername(String username) {
-        Card findedCard = cardRepository.findById(userRepository.findByUsername(username).get().getId())
-                .orElseThrow(() -> new RuntimeException(("Аккаунт связанный с: " + username + " не найден")));
-        return convertToDTO(findedCard);
+    //READ - получить карты по имени пользователя
+    public List<CardResponseNumberDTO> getCardsByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        List<Card> cards = cardRepository.findByOwner(user);
+
+        return cards.stream()
+                .map(this::converToNumberDTO)
+                .collect(Collectors.toList());
     }
 
     //READ - получить карту по ее ID
@@ -120,6 +127,12 @@ public class CardService {
         return dto;
     }
 
+    private CardResponseNumberDTO converToNumberDTO(Card card) {
+        CardResponseNumberDTO dto = new CardResponseNumberDTO();
+        dto.setCardNumber(card.getCardNumber());
+        return dto;
+    }
+
     // С использованием SecureRandom (рекомендуется)
     public static String generateRandom16Digit() {
         SecureRandom random = new SecureRandom();
@@ -133,4 +146,7 @@ public class CardService {
     }
 
 
+    public Long getCountOfAllCards() {
+        return (long) cardRepository.findAll().size();
+    }
 }

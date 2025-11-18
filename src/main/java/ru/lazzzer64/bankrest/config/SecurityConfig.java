@@ -20,7 +20,7 @@ import ru.lazzzer64.bankrest.security.JwtFilter;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
@@ -40,8 +40,8 @@ public class SecurityConfig {
                                         "/api/auth/token",
                                         "/api/v1/users")
                                 .permitAll()
-                                .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
+//                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                                 .and()
                                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 ).build();
