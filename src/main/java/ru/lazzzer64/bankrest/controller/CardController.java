@@ -56,6 +56,12 @@ public class CardController {
         return ResponseEntity.ok(cardService.getCardsByUsername(username));
     }
 
+    //READ - Получить баланс карты
+    @GetMapping("/{id}/balance")
+    public ResponseEntity<BigDecimal> getBalance(@PathVariable Long id) {
+        return ResponseEntity.ok(cardService.getCardById(id).getBalance());
+    }
+
     //UPDATE - Заблокировать карту
     @PutMapping("/{id}/block")
     @PreAuthorize("hasAuthority('ADMIN')")
