@@ -5,12 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardTransactionDTO;
 import ru.lazzzer64.bankrest.dto.userDTO.UserRegistrationDTO;
 import ru.lazzzer64.bankrest.dto.userDTO.UserResponseDTO;
 import ru.lazzzer64.bankrest.dto.userDTO.UserUpdateDTO;
 import ru.lazzzer64.bankrest.entity.User;
+import ru.lazzzer64.bankrest.service.CardService;
 import ru.lazzzer64.bankrest.service.UserService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -18,9 +21,11 @@ import java.util.List;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     private final UserService userService;
+    private final CardService cardService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CardService cardService) {
         this.userService = userService;
+        this.cardService = cardService;
     }
 
     //CREATE - Создать пользователя
@@ -52,6 +57,8 @@ public class UserController {
                                                       @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
         return ResponseEntity.ok(userService.updateUser(id, userUpdateDTO));
     }
+
+
 
     //DELETE - Удалить пользователя
     @DeleteMapping("/{id}")

@@ -1,6 +1,7 @@
 package ru.lazzzer64.bankrest.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -53,6 +54,7 @@ public class Card {
         this.id = id;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     public BigDecimal getBalance() {
         return balance;
     }

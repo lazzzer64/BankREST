@@ -12,6 +12,7 @@ import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.service.CardService;
 import ru.lazzzer64.bankrest.service.UserService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -67,6 +68,14 @@ public class CardController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<CardStatus> activeCard(@PathVariable Long id) {
         return ResponseEntity.ok(cardService.activeCard(id).getCardStatus());
+    }
+
+    //UPDATE - Перевести деньги с карты на карту
+    @PutMapping("/transactions/{amount}/{idCardSender}/{idCardRecipient}")
+    public ResponseEntity transaction(@PathVariable(value = "amount", required = true) BigDecimal amount,
+                                      @PathVariable(value = "idCardSender", required = true) Long idCardSender,
+                                      @PathVariable(value = "idCardRecipient", required = true) Long idCardRecipient) {
+        return ResponseEntity.ok(cardService.transaction(amount, idCardSender, idCardRecipient));
     }
 
     //DELETE - Удалить карту

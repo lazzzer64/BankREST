@@ -5,13 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseNumberDTO;
-import ru.lazzzer64.bankrest.dto.cardDTO.CardUpdateDTO;
+import ru.lazzzer64.bankrest.dto.cardDTO.CardTransactionDTO;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.repository.CardRepository;
 import ru.lazzzer64.bankrest.repository.UserRepository;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,11 +87,13 @@ public class CardService {
                 .orElseThrow(() -> new RuntimeException(("Карта с id: " + id + " не найдена")));
     }
 
-    //UPDATE - Обновить данные карты
-    public CardResponseDTO updateCard(Long id, CardUpdateDTO dto) {
-        return null;
+    //UPDATE - Изменить баланс данные карты
+    private CardResponseDTO changeCardBalance(Long id, BigDecimal amount) {
+        Card card = chooseCard(id);
+        card.setBalance(card.getBalance().add(amount));
+        cardRepository.save(card);
+        return convertToDTO(card);
     }
-
 
     //UPDATE - Заблокировать карту
     public CardResponseDTO blockCard(Long id) {
@@ -110,6 +113,16 @@ public class CardService {
         card.setStatus(CardStatus.ACTIVE);
         cardRepository.save(card);
         return convertToDTO(card);
+    }
+
+    //UPDATE - Перевести деньги с карты на карту
+    public boolean transaction(BigDecimal amount, Long idCardSender, Long idCardRecipient) {
+//        if ((checkCardBalance(idCardSender, amount))) {
+            changeCardBalance(idCardSender, amount.negate());
+            changeCardBalance(idCardRecipient, amount);
+            return true;
+//        } else
+//            return false;
     }
 
     //DELETE - Удалить карту
@@ -148,5 +161,18 @@ public class CardService {
 
     public Long getCountOfAllCards() {
         return (long) cardRepository.findAll().size();
+    }
+
+    private Card chooseCard(Long id) {
+        return cardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Карта не найдена"));
+    }
+
+    private boolean checkCardBalance(Long id, BigDecimal amount) {
+        Card card = chooseCard(id);
+        if (card.getBalance().compareTo(amount) >= 0)
+            return true;
+        else
+            return false;
     }
 }
