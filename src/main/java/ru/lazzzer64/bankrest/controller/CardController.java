@@ -71,10 +71,10 @@ public class CardController {
     }
 
     //UPDATE - Перевести деньги с карты на карту
-    @PutMapping("/transactions/{amount}/{idCardSender}/{idCardRecipient}")
-    public ResponseEntity transaction(@PathVariable(value = "amount", required = true) BigDecimal amount,
-                                      @PathVariable(value = "idCardSender", required = true) Long idCardSender,
-                                      @PathVariable(value = "idCardRecipient", required = true) Long idCardRecipient) {
+    @PutMapping("/transactions")
+    public ResponseEntity transaction(@RequestParam BigDecimal amount,
+                                      @RequestParam Long idCardSender,
+                                      @RequestParam Long idCardRecipient) {
         return ResponseEntity.ok(cardService.transaction(amount, idCardSender, idCardRecipient));
     }
 
