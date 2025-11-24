@@ -18,7 +18,6 @@ import ru.lazzzer64.bankrest.entity.User;
 import ru.lazzzer64.bankrest.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

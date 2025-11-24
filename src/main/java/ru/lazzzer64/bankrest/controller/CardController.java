@@ -50,6 +50,7 @@ public class CardController {
 
     //READ - Получить карту по имени пользователя
     @GetMapping("/{username}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<List<CardResponseNumberDTO>> getCardsByUsername(@PathVariable String username) {
         return ResponseEntity.ok(cardService.getCardsByUsername(username));
     }
