@@ -25,6 +25,7 @@ import java.util.List;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
+
     private final CardService cardService;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
