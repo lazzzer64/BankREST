@@ -1,11 +1,9 @@
 package ru.lazzzer64.bankrest.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseDTO;
 import ru.lazzzer64.bankrest.dto.cardDTO.CardResponseNumberDTO;
-import ru.lazzzer64.bankrest.dto.cardDTO.CardTransactionDTO;
 import ru.lazzzer64.bankrest.entity.Card;
 import ru.lazzzer64.bankrest.entity.CardStatus;
 import ru.lazzzer64.bankrest.entity.User;
@@ -21,11 +19,14 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CardService {
-    @Autowired
-    private CardRepository cardRepository;
+    private final CardRepository cardRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public CardService(CardRepository cardRepository, UserRepository userRepository) {
+        this.cardRepository = cardRepository;
+        this.userRepository = userRepository;
+    }
 
     //CREATE - Создание новой карты при создании нового пользователя
     public CardResponseDTO createCard(Long userId) {
@@ -56,7 +57,7 @@ public class CardService {
     }
 
     //READ - получить карту по ее Id
-    public CardResponseDTO getAccountDTOById(Long id) {
+    public CardResponseDTO getCardDTOById(Long id) {
         Card findedCard = cardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(("Аккаунт с ID: " + id + " не найден")));
         return convertToDTO(findedCard);
@@ -88,11 +89,11 @@ public class CardService {
     }
 
     //UPDATE - Изменить баланс данные карты
-    private CardResponseDTO changeCardBalance(Long id, BigDecimal amount) {
-        Card card = chooseCard(id);
+    private void changeCardBalance(Long id, BigDecimal amount) {
+        Card card = getCardById(id);
         card.setBalance(card.getBalance().add(amount));
         cardRepository.save(card);
-        return convertToDTO(card);
+        convertToDTO(card);
     }
 
     //UPDATE - Заблокировать карту
@@ -118,9 +119,9 @@ public class CardService {
     //UPDATE - Перевести деньги с карты на карту
     public boolean transaction(BigDecimal amount, Long idCardSender, Long idCardRecipient) {
 //        if ((checkCardBalance(idCardSender, amount))) {
-            changeCardBalance(idCardSender, amount.negate());
-            changeCardBalance(idCardRecipient, amount);
-            return true;
+        changeCardBalance(idCardSender, amount.negate());
+        changeCardBalance(idCardRecipient, amount);
+        return true;
 //        } else
 //            return false;
     }
@@ -163,16 +164,12 @@ public class CardService {
         return (long) cardRepository.findAll().size();
     }
 
-    private Card chooseCard(Long id) {
-        return cardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Карта не найдена"));
-    }
-
     private boolean checkCardBalance(Long id, BigDecimal amount) {
-        Card card = chooseCard(id);
+        Card card = getCardById(id);
         if (card.getBalance().compareTo(amount) >= 0)
             return true;
         else
             return false;
     }
+
 }
